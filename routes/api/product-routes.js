@@ -61,10 +61,17 @@ router.post('/', (req, res) => {
 // update product
 router.put('/:id', (req, res) => {
   // update product data
-  Product.update(req.body, {
-    where: {
-      id: req.params.id,
+  Product.update(
+    {
+    product_name: req.params.product_name,
+    price: req.params.price,
+    stock:req.params.stock,
+    category_id: req.params.category_id
     },
+  {
+    where: {
+    id: req.params.id, 
+    }
   })
     .then((product) => {
       if (req.body.tagIds && req.body.tagIds.length) {
@@ -103,6 +110,7 @@ router.put('/:id', (req, res) => {
     });
 });
 
+//Delete a single Product
 router.delete('/:id', async (req, res) => {
  try {
   const productData = await Product.destroy({
@@ -119,6 +127,7 @@ router.delete('/:id', async (req, res) => {
 
   res.status(200).json(productData);
  } catch (err) {
+  //error handling
   res.status(500).json(err)
  }
 });
