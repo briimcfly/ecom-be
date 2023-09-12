@@ -15,9 +15,21 @@ try {
 });
 
 //get single tag by id
-router.get('/:id', (req, res) => {
-  // find a single tag by its `id`
-  // be sure to include its associated Product data
+router.get('/:id', async (req, res) => {
+  try {
+    const tagData = await Tag.findByPk(req.params.id);
+    
+    //No ID can be found 
+    if (!tagData) {
+      res.status(404).json({message: "No Tag found with that ID"});
+      return
+    }
+
+    res.status(200).json(tagData);
+  } catch (err){
+    //error handling 
+    res.status(500).json(err)
+  }
 });
 
 
