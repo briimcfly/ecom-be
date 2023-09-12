@@ -63,10 +63,11 @@ router.put('/:id', (req, res) => {
   // update product data
   Product.update(
     {
-    product_name: req.params.product_name,
-    price: req.params.price,
-    stock:req.params.stock,
-    category_id: req.params.category_id
+    product_name: req.body.product_name,
+    price: req.body.price,
+    stock:req.body.stock,
+    category_id: req.body.category_id,
+    tagIds: req.body.tagIds
     },
   {
     where: {
