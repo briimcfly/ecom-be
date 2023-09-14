@@ -46,14 +46,29 @@ try{
 }
 });
 
-router.put('/:id', (req, res) => {
+//Update a Category
+router.put('/:id', async (req, res) => {
  try {
+ const catData = await Category.update(req.body, {
+  where: {
+    id: req.params.id
+  }
+ })
+
+ //No ID Found 
+ if (!catData) {
+  res.status(404).json({message: "No Category found with that ID"})
+ }
+
+ res.status(200).json(catData);
 
  } catch(err){
   res.status(500).json(err)
  }
 });
 
+
+//Delete a Category
 router.delete('/:id', async (req, res) => {
  try {
  const catData = await Category.destroy({
